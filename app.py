@@ -41,3 +41,10 @@ jd=st.text_area("Enter the job description")
 file=st.file_uploader("Upload your resume", type="pdf",help="Please upload your resume in pdf format")
 
 submit = st.button("Submit")
+
+
+if submit:
+    if file is not None:
+        text=input_pdf_text(file)
+        response=get_gemini_response(input_prompt)
+        st.subheader(response)
