@@ -10,19 +10,27 @@ genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
 
 def get_gemini_response(jd, text):
     input_prompt = f"""
-    Hey Act like a skilled and very experienced ATS(Application Tracking System) with a 
-    deep understanding of the tech field, software engineering, data science, data analyst, 
-    and big data engineering. Your task is to evaluate the resume based on the given job description.
-    You must consider the job market is very competitive and you should provide the best assistance for 
-    improving the resumes. Assign the percentage Matching based on JD and the missing keywords with 
-    high accuracy.
+    You are a highly skilled and experienced ATS (Application Tracking System) evaluator with deep expertise in the tech field, including software engineering, data science, data analysis, and big data engineering. Your task is to thoroughly analyze the provided resume based on the given job description. Consider the highly competitive job market and provide an in-depth evaluation of the resume's suitability for the position.
     
-    resume: {text}
-    description: {jd}
+    The evaluation should cover the following points:
+    1. **Job Description Match**: Determine the percentage match between the resume and the job description based on key skills, qualifications, and experience. This should be an overall percentage score.
+    2. **Missing Keywords/Skills**: Identify any essential keywords, skills, or qualifications that are mentioned in the job description but are missing or underrepresented in the resume. List them clearly.
+    3. **Experience Relevance**: Assess the relevance of the candidate's experience to the job description. Highlight any mismatches or gaps.
+    4. **Profile Summary**: Provide a summary of the candidate's profile based on the resume content. Include strengths, potential areas for improvement, and overall suitability for the role.
+    5. **Suggestions for Improvement**: Offer specific suggestions on how the resume could be improved, such as adding missing skills, clarifying experience, or emphasizing key achievements.
     
-    I want the response in one single string having the structure:
-    {{"Job Desc Match":"%", "Missing keywords":"[]", "Profile Summary":""}}
+    Here is the format you should follow for your response:
+    {{
+      "Job Desc Match": "percentage",
+      "Missing Keywords": ["keyword1", "keyword2", "keyword3"],
+      "Experience Relevance": "high/medium/low",
+      "Profile Summary": "short summary of the candidate",
+      "Suggestions for Improvement": ["suggestion1", "suggestion2"]
+    }}
+    Resume: {text}
+    Job Description: {jd}
     """
+
     try:
         model = genai.GenerativeModel('gemini-pro')
         response = model.generate_content(input_prompt)
