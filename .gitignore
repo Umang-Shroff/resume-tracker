@@ -1,0 +1,11 @@
+# Ignore virtual environment folder
+venv/
+.env
+# Ignore Python bytecode files
+__pycache__/
+
+# Optional: Ignore any IDE-specific files (if using VS Code or others)
+.vscode/
+
+# Optional: Ignore any OS-specific files (macOS example)
+.DS_Store
